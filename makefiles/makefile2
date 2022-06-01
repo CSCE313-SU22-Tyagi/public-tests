@@ -18,11 +18,7 @@ all: clean $(BINS)
 	$(CXX) $(CXXFLAGS) -o $(patsubst %.exe,%,$@) $^ $(LDLIBS)
 
 
-.PHONY: clean test
+.PHONY: clean
 
 clean:
 	rm -f shell a b test.txt output.txt out.trace ./test-files/cmd.txt
-
-test: all
-	chmod u+x pa2-tests.sh
-	./pa2-tests.sh
