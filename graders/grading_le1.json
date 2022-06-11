@@ -1,0 +1,25 @@
+{
+    "tests": [
+      {
+        "name": "Compilation",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "ls -la | grep shell",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 10,
+        "points": 34
+      },
+      {
+        "name": "Correct Output",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "RES=$(. ./test-files/test_output.txt); ./shell 2>/dev/null | grep -qF -- \"${RES}\"",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 10,
+        "points": 66
+      }
+    ]
+  }
+  
