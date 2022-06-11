@@ -2,8 +2,8 @@
     "tests": [
       {
         "name": "Compilation",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "ls -la | grep shell",
+        "setup": "g++ shell.cpp",
+        "run": "ls -la | grep a.out",
         "input": "",
         "output": "",
         "comparison": "included",
