@@ -3,7 +3,7 @@
       {
         "name": "Compilation",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "ls -la | grep schedule",
+        "run": "ls -al | grep -E \"schedule(\\s|$)\"",
         "input": "",
         "output": "schedule",
         "comparison": "included",
