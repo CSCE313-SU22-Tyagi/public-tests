@@ -1,0 +1,74 @@
+{
+    "tests": [
+      {
+        "name": "Compilation",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "ls -la | grep shell",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 10,
+        "points": 10
+      },
+      {
+        "name": "Memory Leakage",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./schedule -i test-files/test_short.csv -q 3 2>/dev/null 1>/dev/null",
+        "input": "",
+        "output": "",
+        "comparison": "exact",
+        "timeout": 10,
+        "points": 10
+      },
+      {
+        "name": "Scheduling with Jobs Shorter Than Quantums pt 1",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./schedule -i test-files/test_short.csv -q 100 > test-files/cmd.txt 2>/dev/null; diff test-files/cmd.txt test-files/output_short.txt",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout": 10,
+        "points": 15
+      },
+      {
+        "name": "Scheduling with Jobs Shorter Than Quantums pt 2",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./schedule -i test-files/test_v_short.csv -q 2 > test-files/cmd.txt 2>/dev/null; diff test-files/cmd.txt test-files/output_v_short.txt",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout": 10,
+        "points": 15
+      },
+      {
+        "name": "Scheduling with Jobs Longer Than Quantums pt 1",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./schedule -i test-files/test_long.csv -q 3 > test-files/cmd.txt 2>/dev/null; diff test-files/cmd.txt test-files/output_long.txt",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout": 10,
+        "points": 15
+      },
+      {
+        "name": "Scheduling with Jobs Longer Than Quantums pt 2",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./schedule -i test-files/test_v_long.csv -q 2 > test-files/cmd.txt 2>/dev/null; diff test-files/cmd.txt test-files/output_v_long.txt",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout": 10,
+        "points": 15
+      },
+      {
+        "name": "Scheduling with NOP",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./schedule -i Tasks/Task3.csv -q 3 > test-files/cmd.txt 2>/dev/null; diff test-files/cmd.txt test-files/output_nop.txt",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout": 10,
+        "points": 20
+      }
+    ]
+  }
