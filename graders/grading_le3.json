@@ -5,7 +5,7 @@
         "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "ls -la | grep schedule",
         "input": "",
-        "output": "",
+        "output": "schedule",
         "comparison": "included",
         "timeout": 10,
         "points": 10
