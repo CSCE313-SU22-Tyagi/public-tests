@@ -2,23 +2,53 @@
     "tests": [
       {
         "name": "Compilation",
-        "setup": "g++ shell.cpp",
-        "run": "ls -la | grep a.out",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "ls -al | grep -E \"shell(\\s|$)\"",
         "input": "",
-        "output": "",
+        "output": "shell",
         "comparison": "included",
-        "timeout": 10,
-        "points": 34
+        "timeout": 0.5,
+        "points": 10
       },
       {
-        "name": "Correct Output",
+        "name": "Memory Leakage",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "RES=$(. ./test-files/test_output.txt); ./shell 2>/dev/null | grep -qF -- \"${RES}\"",
+        "run": "./shell < ./test-files/test_exit.txt 1>/dev/null",
         "input": "",
         "output": "",
-        "comparison": "included",
-        "timeout": 10,
-        "points": 66
+        "comparison": "exact",
+        "timeout": 1.5,
+        "points": 10
+      },
+      {
+        "name": "Correct Output For Multiple Lines",
+        "setup": "make -s clean; make -s >/dev/null 2>&1; cat ./test-files/test_multiple_lines.txt ./test-files/test_exit.txt > ./test-files/cmd.txt",
+        "run": " export USER=user; RES=$(. ./test-files/test_multiple_lines.txt); ./shell < ./test-files/cmd.txt 2>/dev/null | grep -qF -- \"${RES}\"",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout":  0.5,
+        "points": 25
+      },
+      {
+        "name": "Correct Output For 2 Commands",
+        "setup": "make -s clean; make -s >/dev/null 2>&1; cat ./test-files/test_two_commands.txt ./test-files/test_exit.txt > ./test-files/cmd.txt",
+        "run": " export USER=user; RES=$(. ./test-files/test_two_commands.txt); ./shell < ./test-files/cmd.txt 2>/dev/null | grep -qF -- \"${RES}\"",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout": 0.5,
+        "points": 25
+      },
+      {
+        "name": "Correct Output For 3+ Commands",
+        "setup": "make -s clean; make -s >/dev/null 2>&1; cat ./test-files/test_four_commands.txt ./test-files/test_exit.txt > ./test-files/cmd.txt",
+        "run": " export USER=user; RES=$(. ./test-files/test_four_commands.txt); ./shell < ./test-files/cmd.txt 2>/dev/null | grep -qF -- \"${RES}\"",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout": 0.5,
+        "points": 15
       }
     ]
   }
