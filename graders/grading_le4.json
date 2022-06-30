@@ -1,0 +1,34 @@
+{
+    "tests": [
+      {
+        "name": "Compilation",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "ls -al | grep -E \"Teller(\\s|$)\"",
+        "input": "",
+        "output": "schedule",
+        "comparison": "included",
+        "timeout": 2,
+        "points": 10
+      },
+      {
+        "name": "Correct Output for Sections 1 and 3",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./Teller -i ./test-files/test.csv 2>/dev/null | grep 49355 | wc -l",
+        "input": "",
+        "output": "2",
+        "comparison": "exact",
+        "timeout": 15,
+        "points": 24
+      },
+      {
+        "name": "Use of Threads",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "strace -o out.trace ./Teller 2>&1 >/dev/null; cat out.trace |  grep \"clone\" | grep -qF \"CLONE_THREAD\"",
+        "input": "",
+        "output": "",
+        "comparison": "include",
+        "timeout": 15,
+        "points": 24
+      }
+    ]
+  }
