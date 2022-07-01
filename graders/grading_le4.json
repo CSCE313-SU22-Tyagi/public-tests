@@ -5,9 +5,9 @@
         "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "ls -al | grep -E \"Teller(\\s|$)\"",
         "input": "",
-        "output": "schedule",
+        "output": "Teller",
         "comparison": "included",
-        "timeout": 2,
+        "timeout": 0.5,
         "points": 10
       },
       {
@@ -15,9 +15,9 @@
         "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "./Teller -i ./test-files/test.csv 2>/dev/null | grep 49355 | wc -l",
         "input": "",
-        "output": "2",
-        "comparison": "exact",
-        "timeout": 15,
+        "output": "/[2-3]",
+        "comparison": "regex",
+        "timeout": 1,
         "points": 33
       },
       {
@@ -27,7 +27,7 @@
         "input": "",
         "output": "",
         "comparison": "include",
-        "timeout": 15,
+        "timeout": 1,
         "points": 24
       }
     ]
