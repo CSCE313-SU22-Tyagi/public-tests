@@ -18,7 +18,7 @@
         "output": "2",
         "comparison": "exact",
         "timeout": 15,
-        "points": 24
+        "points": 33
       },
       {
         "name": "Use of Threads",
