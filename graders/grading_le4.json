@@ -13,7 +13,7 @@
       {
         "name": "Correct Output for Sections 1 and 3",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "./Teller -i ./test-files/test.csv 2>/dev/null | grep 49355 | wc -l",
+        "run": "export USER=user; cp ./test-files/count.txt ./test-files/add.txt; echo \"./test-files/test.csv\" >> ./test-files/add.txt; RES=$(. ./test-files/add1.txt); ./Teller -i ./test-files/test.csv 2>/dev/null | grep -- \"${RES}\" | wc -l",
         "input": "",
         "output": "/[2-3]",
         "comparison": "regex",
