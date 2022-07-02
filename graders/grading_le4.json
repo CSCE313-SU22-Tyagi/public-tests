@@ -13,7 +13,7 @@
       {
         "name": "Correct Output for Sections 1 and 3",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "export USER=user; cp ./test-files/count.txt ./test-files/add.txt; echo \"./test-files/test.csv\" >> ./test-files/add.txt; RES=$(. ./test-files/add.txt); ./Teller -i ./test-files/test.csv",
+        "run": "export USER=user; cp ./test-files/count.txt ./test-files/add.txt; echo \"./test-files/2000.csv\" >> ./test-files/add.txt; RES=$(. ./test-files/add.txt); ./Teller -i ./test-files/2000.csv 2>/dev/null | grep -- \"${RES}\" | wc -l",
         "input": "",
         "output": "/[2-3]",
         "comparison": "regex",
@@ -23,7 +23,7 @@
       {
         "name": "Use of Threads",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "strace -o out.trace ./Teller 2>&1 >/dev/null; cat out.trace |  grep \"clone\" | grep -qF \"CLONE_THREAD\"",
+        "run": "strace -o out.trace ./Teller -i ./test-files/2000.csv 2>&1 >/dev/null; cat out.trace |  grep \"clone\" | grep -qF \"CLONE_THREAD\"",
         "input": "",
         "output": "",
         "comparison": "include",
