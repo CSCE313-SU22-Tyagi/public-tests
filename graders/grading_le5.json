@@ -33,10 +33,10 @@
       {
         "name": "Use of Threads",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "# cat test-files/test_threads.txt test-files/test_exit.txt > test-files/cmd.txt; strace >/dev/null -o out.trace ./data_entry -c \"Emote Num1 Num2\" -f \"test-files/cmd.csv\"; cat out.trace |  grep \"clone\" | grep \"CLONE_THREAD\" | wc -l",      
+        "run": "cat test-files/test_threads.txt test-files/test_exit.txt > test-files/cmd.txt; strace >/dev/null -o out.trace ./data_entry -c \"Emote Num1 Num2\" -f \"test-files/cmd.csv\"; cat out.trace |  grep \"clone\" | grep \"CLONE_THREAD\" | wc -l",      
         "input": "",
-        "output": "2",
-        "comparison": "included",
+        "output": "[^0-1]",
+        "comparison": "regex",
         "timeout": 1,
         "points": 22
       },
