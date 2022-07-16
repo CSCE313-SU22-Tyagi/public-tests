@@ -19,7 +19,7 @@ all: clean $(BINS)
 .PHONY: clean print-var test
 
 clean:
-	rm -f data_entry a.out *.o *.trace ./test-files/cmd*
+	rm -f data_entry a.out *.o *.csv *.trace ./test-files/cmd*
 
 test: all
 	chmod u+x le5-tests.sh
