@@ -43,10 +43,10 @@
       {
         "name": "Threads Close Correctly",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "cat test-files/test_threads.txt test-files/test_exit.txt > test-files/cmd.txt; strace >/dev/null -o out.trace ./data_entry -c \"Emote Num1 Num2\" -f \"test-files/cmd.csv\" < test-files/cmd.txt 2>&1 >/dev/null; cat out.trace | egrep \"tgkill|tkill\"",
+        "run": "cat test-files/test_threads.txt test-files/test_exit.txt > test-files/cmd.txt; strace >/dev/null -o out.trace ./data_entry -c \"Emote Num1 Num2\" -f \"test-files/cmd.csv\" < test-files/cmd.txt 2>&1 >/dev/null; cat out.trace | egrep \"tgkill|tkill\" | wc -l",
         "input": "",
-        "output": "",
-        "comparison": "exact",
+        "output": "[0]",
+        "comparison": "regex",
         "timeout": 1,
         "points": 22
       },
