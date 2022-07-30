@@ -13,7 +13,7 @@
       {
         "name": "Use of Signals",
         "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
-        "run": "strace -e 'trace=signal' -o trace.tst ./client -f 3.csv 1>/dev/null 2>&1; cat out.trace | grep 'rt_sigaction' trace.tst | wc -l > 2",
+        "run": "strace -e 'trace=signal' -o trace.tst ./client -f 3.csv 1>/dev/null 2>&1; cat trace.tst | grep 'rt_sigaction' | wc -l > 2",
         "input": "",
         "output": "",
         "comparison": "included",
@@ -23,7 +23,7 @@
       {
         "name": "Signal Output Info",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "./client -f 5.csv >out.tst 2>/dev/null; [ $(comm -12 out.tst test-files/file_good.txt | wc -l) -eq $(cat test-files/file_good.txt | wc -l) ]",
+        "run": "./client -f 5.csv >out.tst 2>/dev/null; sort out.tst >sorted-out.tst; sort test-files/file_good.txt >sorted-file_good.txt; [ $(comm -12 sorted-out.tst test-files/sorted-file_good.txt | wc -l) -eq $(cat test-files/file_good.txt | wc -l) ]",
         "input": "",
         "output": "",
         "comparison": "included",
@@ -33,7 +33,7 @@
       {
         "name": "Signal Output Error pt. 1",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "./client -f 17.csv >out.tst 2>/dev/null; [ $(comm -12 out.tst test-files/file_bad.txt | wc -l) -eq $(cat test-files/file_bad.txt | wc -l) ]",      
+        "run": "./client -f 17.csv >out.tst 2>/dev/null; sort out.tst >sorted-out.tst; sort test-files/file_bad.txt >sorted-file_bad.txt; [ $(comm -12 sorted-out.tst test-files/sorted-file_bad.txt | wc -l) -eq $(cat test-files/file_bad.txt | wc -l) ]",      
         "input": "",
         "output": "[^0-1]",
         "comparison": "regex",
@@ -43,7 +43,7 @@
       {
         "name": "Signal Output Error pt. 2",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "./client ./client -p 17 -n 1000 -h 10 -b 10 -w 100 >out.tst; [ $(comm -12 out.tst test-files/patient_bad.txt | wc -l) -eq $(cat test-files/patient_bad.txt | wc -l) ]",
+        "run": "./client ./client -p 17 -n 1000 -h 10 -b 10 -w 100 >out.tst; sort out.tst >sorted-out.tst; sort test-files/patient_bad.txt >sorted-patient_bad.txt; [ $(comm -12 sorted-out.tst test-files/sorted-patient_bad.txt | wc -l) -eq $(cat test-files/patient_bad.txt | wc -l) ]",
         "input": "",
         "output": "[0]",
         "comparison": "regex",
@@ -53,7 +53,7 @@
       {
         "name": "Thread Closure",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "strace >/dev/null -o out.trace ./client -p 5 -w 100 -b 10 -h 100 2>&1 >/dev/null; [ cat out.trace | egrep -q \"tgkill|tkill\" ]",
+        "run": "strace >/dev/null -o out.trace ./client -p 5 -w 100 -b 10 -h 100 2>&1 >/dev/null; cat out.trace | egrep -q \"tgkill|tkill\" ",
         "input": "",
         "output": "",
         "comparison": "included",
