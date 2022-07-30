@@ -53,7 +53,7 @@
       {
         "name": "Thread Closure",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "strace -o out.trace ./client -p 5 -w 100 -b 10 -h 100 >/dev/null 2>&1; cat out.trace | grep -q \"tgkill|tkill\" ",
+        "run": "strace -o out.trace ./client -p 5 -w 100 -b 10 -h 100 >/dev/null 2>&1; cat out.trace | grep -q \"tgkill|tkill\" | wc -l",
         "input": "",
         "output": "[0]",
         "comparison": "regex",
