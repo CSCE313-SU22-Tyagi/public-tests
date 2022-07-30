@@ -44,8 +44,8 @@ echo -e "  ${GREEN}Passed${NC}" # if you've made it this far, it's compiling
 SCORE=$(($SCORE+5))
 
 echo -e "\nTesting :: Use of Signals\n"
-strace -e 'trace=signal' -o trace.tst ./client -f 3.csv >out1.tst 2>/dev/null
-if [ $(grep 'rt_sigaction' trace.tst | wc -l) > 2 ]; then
+strace -o trace.tst ./client -f 3.csv >out1.tst 2>/dev/null
+if [ $(grep 'CLONE_SIGHAND' trace.tst | wc -l) -gt 2 ]; then
     echo -e "  ${GREEN}Passed${NC}"
     SCORE=$(($SCORE+20))
 else

@@ -13,7 +13,7 @@
       {
         "name": "Use of Signals",
         "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
-        "run": "strace -e 'trace=signal' -o trace.tst ./client -f 3.csv 1>/dev/null 2>&1; cat trace.tst | grep 'rt_sigaction' | wc -l > 2",
+        "run": "strace -o trace.tst ./client -f 3.csv 1>/dev/null 2>&1; [ $(cat trace.tst | grep 'CLONE_SIGHAND' | wc -l) -gt 2 ]",
         "input": "",
         "output": "",
         "comparison": "included",
