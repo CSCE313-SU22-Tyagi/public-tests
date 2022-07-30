@@ -35,8 +35,8 @@
         "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "./client -f 17.csv >out.tst 2>/dev/null; sort out.tst >sorted-out.tst; sort test-files/file_bad.txt >sorted-file_bad.txt; [ $(comm -12 sorted-out.tst sorted-file_bad.txt | wc -l) -eq $(cat test-files/file_bad.txt | wc -l) ]",      
         "input": "",
-        "output": "[^0-1]",
-        "comparison": "regex",
+        "output": "",
+        "comparison": "included",
         "timeout": 1,
         "points": 15
       },
@@ -45,8 +45,8 @@
         "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "./client ./client -p 17 -n 1000 -h 10 -b 10 -w 100 >out.tst; sort out.tst >sorted-out.tst; sort test-files/patient_bad.txt >sorted-patient_bad.txt; [ $(comm -12 sorted-out.tst sorted-patient_bad.txt | wc -l) -eq $(cat test-files/patient_bad.txt | wc -l) ]",
         "input": "",
-        "output": "[0]",
-        "comparison": "regex",
+        "output": "",
+        "comparison": "included",
         "timeout": 1,
         "points": 15
       },
@@ -55,8 +55,8 @@
         "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "strace -o out.trace ./client -p 5 -w 100 -b 10 -h 100 >/dev/null 2>&1; cat out.trace | grep -q \"tgkill|tkill\" ",
         "input": "",
-        "output": "",
-        "comparison": "included",
+        "output": "[0]",
+        "comparison": "regex",
         "timeout": 1,
         "points": 20
       },
