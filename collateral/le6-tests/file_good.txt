@@ -1,0 +1,3 @@
+INFO: Quarter through file.
+INFO: Halfway through file.
+INFO: Three quarters through file.
