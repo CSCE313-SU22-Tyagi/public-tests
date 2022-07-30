@@ -22,7 +22,7 @@
       },
       {
         "name": "Signal Output Info",
-        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "./client -f 5.csv >out.tst 2>/dev/null; comm -12 <(sort out.tst) <(sort test-files/file_good.txt) | wc -l) -eq $(cat test-files/file_good.txt | wc -l)",
         "input": "",
         "output": "",
@@ -32,7 +32,7 @@
       },
       {
         "name": "Signal Output Error pt. 1",
-        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "./client -f 17.csv >out.tst 2>/dev/null; [ $(comm -12 <(sort out.tst) <(sort test-files/file_bad.txt) | wc -l) -eq $(cat test-files/file_bad.txt | wc -l) ]",      
         "input": "",
         "output": "[^0-1]",
@@ -42,7 +42,7 @@
       },
       {
         "name": "Signal Output Error pt. 2",
-        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "./client ./client -p 17 -n 1000 -h 10 -b 10 -w 100 >out.tst; [ $(comm -12 <(sort out.tst) <(sort test-files/patient_bad.txt) | wc -l) -eq $(cat test-files/patient_bad.txt | wc -l) ]",
         "input": "",
         "output": "[0]",
@@ -52,7 +52,7 @@
       },
       {
         "name": "Thread Closure",
-        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "strace >/dev/null -o out.trace ./client -p 5 -w 100 -b 10 -h 100 2>&1 >/dev/null; [cat out.trace | egrep -q \"tgkill|tkill\"]",
         "input": "",
         "output": "",
@@ -62,7 +62,7 @@
       },
       {
         "name": "Memory Leakage",
-        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "./client -p 5 -w 100 -b 10 -h 100 >&1 >/dev/null",
         "input": "",
         "output": "",
