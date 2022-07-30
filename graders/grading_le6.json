@@ -1,0 +1,74 @@
+{
+    "tests": [
+      {
+        "name": "Compilation",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "ls -al | grep -E \"data_entry(\\s|$)\"",
+        "input": "",
+        "output": "data_entry",
+        "comparison": "included",
+        "timeout": 0.5,
+        "points": 5
+      },
+      {
+        "name": "Use of Signals",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "strace -e 'trace=signal' -o trace.tst ./client -f 3.csv 2>/dev/null 2>&1; [ $(grep 'rt_sigaction' trace.tst | wc -l) > 2 ]",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 1,
+        "points": 20
+      },
+      {
+        "name": "Signal Output Info",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./client -f 5.csv >out.tst 2>/dev/null; [$(comm -12 <(sort out.tst) <(sort test-files/file_good.txt) | wc -l) -eq $(cat test-files/file_good.txt | wc -l)]",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 1,
+        "points": 15
+      },
+      {
+        "name": "Signal Output Error pt. 1",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./client -f 17.csv >out.tst 2>/dev/null; [ $(comm -12 <(sort out.tst) <(sort test-files/file_bad.txt) | wc -l) -eq $(cat test-files/file_bad.txt | wc -l) ]",      
+        "input": "",
+        "output": "[^0-1]",
+        "comparison": "regex",
+        "timeout": 1,
+        "points": 15
+      },
+      {
+        "name": "Signal Output Error pt. 2",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./client ./client -p 17 -n 1000 -h 10 -b 10 -w 100 >out.tst; [ $(comm -12 <(sort out.tst) <(sort test-files/patient_bad.txt) | wc -l) -eq $(cat test-files/patient_bad.txt | wc -l) ]",
+        "input": "",
+        "output": "[0]",
+        "comparison": "regex",
+        "timeout": 1,
+        "points": 15
+      },
+      {
+        "name": "Thread Closure",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "strace >/dev/null -o out.trace ./client -p 5 -w 100 -b 10 -h 100 2>&1 >/dev/null; [cat out.trace | egrep -q \"tgkill|tkill\"]",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 1,
+        "points": 20
+      },
+      {
+        "name": "Memory Leakage",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./client -p 5 -w 100 -b 10 -h 100 >&1 >/dev/null",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 1,
+        "points": 10
+      }
+    ]
+  }
