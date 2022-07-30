@@ -3,9 +3,9 @@
       {
         "name": "Compilation",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "ls -al | grep -E \"data_entry(\\s|$)\"",
+        "run": "ls -al | grep -E \"client(\\s|$)\"",
         "input": "",
-        "output": "data_entry",
+        "output": "client",
         "comparison": "included",
         "timeout": 0.5,
         "points": 5
