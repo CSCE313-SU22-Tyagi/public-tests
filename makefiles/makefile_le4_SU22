@@ -1,10 +1,10 @@
 CXX=g++
-CXXFLAGS=-std=c++17 -g -pedantic -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer
-LDLIBS=-lrt
+CXXFLAGS=-std=c++17 -g -pedantic -Wall -Wextra -Werror -pthread
+LDLIBS=
 
 
-SRCS=MasterChef.cpp
-DEPS=Step.cpp StepList.cpp
+SRCS=Teller.cpp
+DEPS=BankAccount.cpp
 BINS=$(SRCS:%.cpp=%.exe)
 OBJS=$(DEPS:%.cpp=%.o)
 
@@ -21,7 +21,7 @@ all: clean $(BINS)
 .PHONY: clean test
 
 clean:
-	rm -f MasterChef ./test-files/cmd*.txt out1.txt out2.txt trace.txt
+	rm -f Teller out.trace ./test-files/cmd*.txt ./test-files/add*.txt
 
 test: all
 	chmod u+x le4-tests.sh

@@ -3,32 +3,62 @@
       {
         "name": "Compilation",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "ls -al | grep -E \"Teller(\\s|$)\"",
+        "run": "ls -al | grep -E \"MasterChef(\\s|$)\"",
         "input": "",
-        "output": "Teller",
+        "output": "MasterChef",
         "comparison": "included",
         "timeout": 0.5,
-        "points": 10
+        "points": 5
       },
       {
-        "name": "Correct Output for Sections 1 and 3",
+        "name": "Memory Leakage",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "export USER=user; cp ./test-files/count.txt ./test-files/add.txt; echo \"./test-files/2000.csv\" >> ./test-files/add.txt; RES=$(. ./test-files/add.txt); ./Teller -i ./test-files/2000.csv 2>/dev/null | grep -- \"${RES}\" | wc -l",
-        "input": "",
-        "output": "[2-3]",
-        "comparison": "regex",
-        "timeout": 1,
-        "points": 33
-      },
-      {
-        "name": "Use of Threads",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "strace -o out.trace ./Teller -i ./test-files/2000.csv 2>&1 >/dev/null; cat out.trace |  grep \"clone\" | grep -qF \"CLONE_THREAD\"",
+        "run": "./MasterChef -i test-files/NoDep.csv >&1 >/dev/null",
         "input": "",
         "output": "",
-        "comparison": "include",
+        "comparison": "included",
+        "timeout": 1,
+        "points": 5
+      },
+      {
+        "name": "Output without Dependencies",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./MasterChef -i test-files/NoDep.csv >out.txt 2>/dev/null; [ $(comm -12 test-files/no_dep_output.txt out.txt | wc -l) -eq $(cat test-files/no_dep_output.txt | wc -l) ]",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 1,
+        "points": 16
+      },
+      {
+        "name": "Output with Dependencies",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "./MasterChef -i test-files/RecipeInput.csv >out.txt 2>/dev/null; [ $(comm -12 test-files/pate_output.txt out.txt | wc -l) -eq $(cat test-files/pate_output.txt | wc -l) ]",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 1,
+        "points": 17
+      },
+      {
+        "name": "Use of Timers",
+        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "run": "strace -o trace.tst ./MasterChef -i test-files/NoDep.csv 1>/dev/null 2>&1; [ $(cat trace.tst | grep 'rt_sigaction(SIGRTMIN' | wc -l) -gt 0 ]",
+        "input": "",
+        "output": "",
+        "comparison": "included",
         "timeout": 1,
         "points": 24
+      },
+      {
+        "name": "Use of Signals",
+        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "run": "strace -o trace.tst ./MasterChef -i test-files/NoDep.csv 1>/dev/null 2>&1; [ $(cat trace.tst | grep 'rt_sigaction(SIGUSR1' | wc -l) -gt 0 ]",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 1,
+        "points": 33
       }
     ]
   }

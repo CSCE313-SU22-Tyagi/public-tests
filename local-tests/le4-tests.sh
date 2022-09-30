@@ -17,45 +17,70 @@ if [[ COLOUR -eq 0 ]]; then
     NC='\033[0m'
 else
     ORANGE='\033[0m'
-    GREEN='\033[0m'    RED='\033[0m'
+    GREEN='\033[0m'
+    RED='\033[0m'
     NC='\033[0m'
 fi
 
-SCORE=0
+SCORE=5
 
+# if you made it here then it compiled lol
 echo -e "\nStart testing"
-remake
 echo -e "\nTesting :: Compilation\n"
-echo -e "  ${GREEN}Passed${NC}" # if you've made it this far, it's compiling
-SCORE=$(($SCORE+10))
+echo -e "  ${GREEN}Passed${NC}"
 
 remake
-echo -e "\nTesting :: Correct Output for Sections 1 and 3\n"
-cp ./test-files/count.txt ./test-files/add1.txt
-echo "./test-files/test1.csv" >> ./test-files/add1.txt
-RES=$(. ./test-files/add1.txt)
-# if at least 2 matches (supposedly 2 or 3) to the correct final balance in final output, pass
-if [ `./Teller -i ./test-files/test1.csv 2>/dev/null | grep -- "${RES}" | wc -l` -ge 2 ] 
-    then
-        echo -e "  ${GREEN}Passed${NC}"
-        SCORE=$(($SCORE+33))
+echo -e "\nTesting :: Memory Leakage\n"
+if ./MasterChef -i test-files/NoDep.csv 2>/dev/null 1>/dev/null; then
+    echo -e "  ${GREEN}Passed${NC}"
+    SCORE=$(($SCORE+5))
 else
     echo -e "  ${RED}Failed${NC}"
 fi
 
 remake
-echo -e "\nTesting :: Use of Thread\n"
-strace -o out.trace ./Teller 2>&1 >/dev/null
-if cat out.trace |  grep "clone" | grep -qF "CLONE_THREAD"; then
-        echo -e "  ${GREEN}Passed${NC}"
-        SCORE=$(($SCORE+24))
+echo -e "\nTesting :: Output without Dependencies \n"
+./MasterChef -i test-files/NoDep.csv > test-files/cmd.txt 2>/dev/null
+if diff -q test-files/cmd.txt test-files/no_dep_output.txt 2>/dev/null; then
+    echo -e "  ${GREEN}Passed${NC}"
+    SCORE=$(($SCORE+16))
 else
     echo -e "  ${RED}Failed${NC}"
 fi
 
+# this includes a 0 length test case
+remake
+echo -e "\nTesting :: Output with Dependencies \n"
+./MasterChef -i test-files/RecipeInput.csv > test-files/cmd.txt 2>/dev/null
+if diff -q test-files/cmd.txt test-files/pate_output.txt 2>/dev/null; then
+    echo -e "  ${GREEN}Passed${NC}"
+    SCORE=$(($SCORE+17))
+else
+    echo -e "  ${RED}Failed${NC}"
+fi
+
+remake
+echo -e "\nTesting :: Use of Timers \n"
+strace -o trace.txt ./MasterChef -i test-files/NoDep.csv >out1.txt 2>/dev/null
+if [ $(grep 'rt_sigaction(SIGRTMIN' trace.txt | wc -l) -gt 0 ]; then
+    echo -e "  ${GREEN}Passed${NC}"
+    SCORE=$(($SCORE+24))
+else
+    echo -e "  ${RED}Incorrect use of timers${NC}"
+fi
+
+# remake
+echo -e "\nTesting :: Use of Signals \n"
+# strace -o trace.txt ./MasterChef -i test-files/NoDep.csv >out2.txt 2>/dev/null
+if [ $(grep 'rt_sigaction(SIGUSR1' trace.txt | wc -l) -gt 0 ]; then
+    echo -e "  ${GREEN}Passed${NC}"
+    SCORE=$(($SCORE+33))
+else
+    echo -e "  ${RED}Incorrect use of signals${NC}"
+fi
 
 # print score and delete executable
-echo -e "\nSCORE: ${SCORE}/67\n"
+echo -e "\nSCORE: ${SCORE}/100\n"
 make -s clean
 
 exit 0
