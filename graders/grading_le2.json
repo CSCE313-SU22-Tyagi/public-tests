@@ -2,8 +2,8 @@
     "tests": [
       {
         "name": "Compilation",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "ls -al | grep -E \"shell(\\s|$)\"",
+        "setup": "make -s clean;",
+        "run": "make -s && ls -al | grep -E \"shell(\\s|$)\"",
         "input": "",
         "output": "shell",
         "comparison": "included",
