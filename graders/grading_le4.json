@@ -52,7 +52,7 @@
       },
       {
         "name": "Use of Signals",
-        "setup": "make -s clean; make -s >/dev/null 2>&1d",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "strace -o trace.tst ./MasterChef -i test-files/NoDep.csv 1>/dev/null 2>&1; [ $(cat trace.tst | grep 'rt_sigaction(SIGUSR1' | wc -l) -gt 0 ]",
         "input": "",
         "output": "",
