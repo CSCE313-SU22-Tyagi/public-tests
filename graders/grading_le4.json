@@ -37,12 +37,12 @@
         "input": "",
         "output": "",
         "comparison": "included",
-        "timeout": 1,
+        "timeout": 5,
         "points": 17
       },
       {
         "name": "Use of Timers",
-        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
         "run": "strace -o trace.tst ./MasterChef -i test-files/NoDep.csv 1>/dev/null 2>&1; [ $(cat trace.tst | grep 'rt_sigaction(SIGRTMIN' | wc -l) -gt 0 ]",
         "input": "",
         "output": "",
@@ -52,7 +52,7 @@
       },
       {
         "name": "Use of Signals",
-        "setup": "make -s clean; make -s >/dev/null 2>&1; mkdir received",
+        "setup": "make -s clean; make -s >/dev/null 2>&1d",
         "run": "strace -o trace.tst ./MasterChef -i test-files/NoDep.csv 1>/dev/null 2>&1; [ $(cat trace.tst | grep 'rt_sigaction(SIGUSR1' | wc -l) -gt 0 ]",
         "input": "",
         "output": "",
