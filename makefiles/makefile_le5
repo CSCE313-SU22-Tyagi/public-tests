@@ -1,11 +1,13 @@
 CXX=g++
-CXXFLAGS=-std=c++17 -g -pedantic -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer
+CXXFLAGS=-std=c++17 -g -pedantic -Wall -Wextra -pthread
 LDLIBS=
 
-SRCS=data_entry.cpp
-DEPS=BoundedBuffer.cpp
+
+SRCS=Teller.cpp
+DEPS=BankAccount.cpp
 BINS=$(SRCS:%.cpp=%.exe)
 OBJS=$(DEPS:%.cpp=%.o)
+
 
 all: clean $(BINS)
 
@@ -16,11 +18,11 @@ all: clean $(BINS)
 	$(CXX) $(CXXFLAGS) -o $(patsubst %.exe,%,$@) $^ $(LDLIBS)
 
 
-.PHONY: clean print-var test
+.PHONY: clean test
 
 clean:
-	rm -f data_entry a.out *.o *.csv *.trace ./test-files/cmd*
+	rm -f Teller out.trace ./test-files/cmd*.txt ./test-files/add*.txt
 
 test: all
-	chmod u+x le5-tests.sh
-	./le5-tests.sh
+	chmod u+x le4-tests.sh
+	./le4-tests.sh

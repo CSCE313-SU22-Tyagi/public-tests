@@ -1,0 +1,3 @@
+Server received 260 bytes: "Kyle", 9851
+Server reply: "SUCCESS"
+Server sent 8/8 bytes

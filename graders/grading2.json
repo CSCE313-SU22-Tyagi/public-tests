@@ -1,6 +1,16 @@
 {
   "tests": [
     {
+      "name": "Compilation",
+      "setup": "make -s clean",
+      "run": "make",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 0
+    },
+    {
       "name": "echo \"Hello world | Life is Good > Great $\"",
       "setup": "make -s clean; make -s >/dev/null 2>&1; cat ./test-files/test_echo_double.txt ./test-files/test_exit.txt > ./test-files/cmd.txt",
       "run": "export USER=user; RES=$(. ./test-files/test_echo_double.txt); ./shell < ./test-files/cmd.txt 2>/dev/null | grep -qF -- \"${RES}\"",

@@ -2,10 +2,15 @@ CXX=g++
 CXXFLAGS=-std=c++17 -g -pedantic -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer
 LDLIBS=
 
-SRCS=data_entry.cpp
-DEPS=BoundedBuffer.cpp
+# 0 for output in autograder, 1 for no output in autograder
+OUT=1
+
+
+SRCS=server.cpp client.cpp
+DEPS=BoundedBuffer.cpp common.cpp FIFORequestChannel.cpp Histogram.cpp HistogramCollection.cpp
 BINS=$(SRCS:%.cpp=%.exe)
 OBJS=$(DEPS:%.cpp=%.o)
+
 
 all: clean $(BINS)
 
@@ -19,8 +24,12 @@ all: clean $(BINS)
 .PHONY: clean print-var test
 
 clean:
-	rm -f data_entry a.out *.o *.csv *.trace ./test-files/cmd*
+	rm -f server client fifo* data*_* *.tst *.o *.csv received/* *.trace
+
+print-var:
+	echo $(OUT)
 
 test: all
-	chmod u+x le5-tests.sh
-	./le5-tests.sh
+	cp BoundedBuffer.* test-files/
+	chmod u+x le6-tests.sh
+	./le6-tests.sh

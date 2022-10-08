@@ -1,0 +1,5 @@
+Client request: "Colorado"
+Client sent 9/9 bytes
+Client received 260 bytes
+ The capital of Colorado is: Denver
+ The number of cars in Denver is: 29328

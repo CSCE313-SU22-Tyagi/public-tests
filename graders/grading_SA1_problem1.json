@@ -1,0 +1,107 @@
+{
+  "tests": [
+    {
+      "name": "Compilation",
+      "setup": "make -s clean",
+      "run": "make",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Client Opens Pipes",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server >/dev/null 2>&1 & strace -e trace=openat -f -o test-files/trace ./client -n Ali -i 8361 >/dev/null 2>&1; wait; cat test-files/trace | grep pipe_ | sed 's/[0-9]* //1' | sed 's/ = [0-9]*//1' > test-files/out_client.txt; diff -qwB test-files/out_client.txt test-files/test_0.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    },
+    {
+      "name": "Case 1 Request (Ali 8361)",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server > test-files/out_server.txt 2>/dev/null & ./client -n Ali -i 8361 > test-files/out_client.txt 2>/dev/null; wait; diff -q test-files/out_server.txt test-files/test_1_server.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    },
+    {
+      "name": "Case 1 Reply (Ali 8361)",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server > test-files/out_server.txt 2>/dev/null & ./client -n Ali -i 8361 > test-files/out_client.txt 2>/dev/null; wait; diff -q test-files/out_client.txt test-files/test_1_client.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    }
+    ,
+    {
+      "name": "Case 2 Request (Kyle 9851)",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server > test-files/out_server.txt 2>/dev/null & ./client -n Kyle -i 9851 > test-files/out_client.txt 2>/dev/null; wait; diff -q test-files/out_server.txt test-files/test_2_server.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    },
+    {
+      "name": "Case 2 Reply (Kyle 9851)",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server > test-files/out_server.txt 2>/dev/null & ./client -n Kyle -i 9851 > test-files/out_client.txt 2>/dev/null; wait; diff -q test-files/out_client.txt test-files/test_2_client.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    }
+    ,
+    {
+      "name": "Case 3 Request (Kyle 0000)",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server > test-files/out_server.txt 2>/dev/null & ./client -n Kyle -i 0000 > test-files/out_client.txt 2>/dev/null; wait; diff -q test-files/out_server.txt test-files/test_3_server.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    },
+    {
+      "name": "Case 3 Reply (Kyle 0000)",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server > test-files/out_server.txt 2>/dev/null & ./client -n Kyle -i 0000 > test-files/out_client.txt 2>/dev/null; wait; diff -q test-files/out_client.txt test-files/test_3_client.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    }
+    ,
+    {
+      "name": "Case 4 Request (Someone 9851)",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server > test-files/out_server.txt 2>/dev/null & ./client -n Someone -i 9851 > test-files/out_client.txt 2>/dev/null; wait; diff -q test-files/out_server.txt test-files/test_4_server.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    },
+    {
+      "name": "Case 4 Reply (Someone 9851)",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server > test-files/out_server.txt 2>/dev/null & ./client -n Someone -i 9851 > test-files/out_client.txt 2>/dev/null; wait; diff -q test-files/out_client.txt test-files/test_4_client.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 0.15,
+      "points": 1
+    }
+  ]
+}

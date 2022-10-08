@@ -1,0 +1,5 @@
+Client request: "Texas"
+Client sent 6/6 bytes
+Client received 260 bytes
+ The capital of Texas is: Austin
+ The number of cars in Austin is: 94062

@@ -1,0 +1,17 @@
+CXX=g++
+CXXFLAGS=-std=c++17 -g -pedantic -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer
+
+all: server client
+
+server: common.o
+
+client: common.o
+
+.PHONY: clean test
+
+clean: 
+	rm -f server client common.o pipe_*
+
+test: all
+	chmod u+x SA1-tests-1.sh
+	./SA1-tests-1.sh

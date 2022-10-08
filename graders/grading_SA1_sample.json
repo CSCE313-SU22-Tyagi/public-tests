@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "Case 1 Request",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server | grep \"Server received\" > test-files/out.txt & ./client Gabriel 6 7; wait; diff test-files/out.txt test-files/test_1.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Case 1 Reply",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server & ./client Gabriel 6 7 | grep \"Client received\" > test-files/out.txt; wait; diff test-files/out.txt test-files/test_2.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Case 2 Request",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server | grep \"Server received\" > test-files/out.txt & ./client \"Test Subject\" 4 1; wait; diff test-files/out.txt test-files/test_3.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Case 2 Reply",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./server & ./client \"Test Subject\" 4 1 | grep \"Client received\" > test-files/out.txt; wait; diff test-files/out.txt test-files/test_4.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    }
+  ]
+}

@@ -3,62 +3,32 @@
       {
         "name": "Compilation",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "ls -al | grep -E \"data_entry(\\s|$)\"",
+        "run": "ls -al | grep -E \"Teller(\\s|$)\"",
         "input": "",
-        "output": "data_entry",
+        "output": "Teller",
         "comparison": "included",
         "timeout": 0.5,
         "points": 10
       },
       {
-        "name": "Correct Output Pt. 1",
+        "name": "Correct Output for Sections 1 and 3",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "cat test-files/test_output.txt test-files/test_exit.txt > test-files/cmd.txt; ./data_entry -c \"Boring Names 777\" -f \"test-files/cmd.csv\" < test-files/cmd.txt 2>&1 >/dev/null; diff test-files/cmd.csv test-files/test_output.csv",
+        "run": "export USER=user; cp ./test-files/count.txt ./test-files/add.txt; echo \"./test-files/2000.csv\" >> ./test-files/add.txt; RES=$(. ./test-files/add.txt); ./Teller -i ./test-files/2000.csv 2>/dev/null | grep -- \"${RES}\" | wc -l",
         "input": "",
-        "output": "",
-        "comparison": "included",
+        "output": "[2-3]",
+        "comparison": "regex",
         "timeout": 1,
-        "points": 16
-      },
-      {
-        "name": "Correct Output Pt. 2",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "cat test-files/test_output2.txt test-files/test_exit.txt > test-files/cmd.txt; ./data_entry -c \"Name ID Age\" -f \"test-files/cmd.csv\" < test-files/cmd.txt 2>&1 >/dev/null; diff test-files/cmd.csv test-files/test_output2.csv",
-        "input": "",
-        "output": "",
-        "comparison": "included",
-        "timeout": 1,
-        "points": 17
+        "points": 33
       },
       {
         "name": "Use of Threads",
         "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "cat test-files/test_threads.txt test-files/test_exit.txt > test-files/cmd.txt; strace >/dev/null -o out.trace ./data_entry -c \"Emote Num1 Num2\" -f \"test-files/cmd.csv\" < ./test-files/cmd.txt 2>&1 >/dev/null; cat out.trace |  grep \"clone\" | grep \"CLONE_THREAD\" | wc -l",      
-        "input": "",
-        "output": "[^0-1]",
-        "comparison": "regex",
-        "timeout": 1,
-        "points": 22
-      },
-      {
-        "name": "Threads Close Correctly",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "cat test-files/test_threads.txt test-files/test_exit.txt > test-files/cmd.txt; strace >/dev/null -o out.trace ./data_entry -c \"Emote Num1 Num2\" -f \"test-files/cmd.csv\" < test-files/cmd.txt 2>&1 >/dev/null; cat out.trace | egrep \"tgkill|tkill\" | wc -l",
-        "input": "",
-        "output": "[0]",
-        "comparison": "regex",
-        "timeout": 1,
-        "points": 22
-      },
-      {
-        "name": "Memory Leakage",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "cat test-files/test_output.txt test-files/test_exit.txt > test-files/cmd.txt; ./data_entry -c \"Emote Num1 Num2\" -f \"test-files/cmd.csv\" < test-files/cmd.txt 2>&1 >/dev/null",
+        "run": "strace -o out.trace ./Teller -i ./test-files/2000.csv 2>&1 >/dev/null; cat out.trace |  grep \"clone\" | grep -qF \"CLONE_THREAD\"",
         "input": "",
         "output": "",
-        "comparison": "included",
+        "comparison": "include",
         "timeout": 1,
-        "points": 13
+        "points": 24
       }
     ]
   }

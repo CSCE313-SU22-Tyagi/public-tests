@@ -1,0 +1,2 @@
+openat(AT_FDCWD, "pipe_client_to_server", O_WRONLY)
+openat(AT_FDCWD, "pipe_server_to_client", O_RDONLY)

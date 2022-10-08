@@ -1,0 +1,5 @@
+Client request: "Nevada"
+Client sent 7/7 bytes
+Client received 260 bytes
+ The capital of Nevada is: Carson City
+ The number of cars in Carson City is: 79417

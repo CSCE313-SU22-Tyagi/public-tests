@@ -1,0 +1,3 @@
+Server received 7 bytes: "Nevada"
+Server reply: "Carson City", 79417
+Server sent 260/260 bytes
