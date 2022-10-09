@@ -73,7 +73,7 @@
     {
       "name": "ls -l | grep \"shell.cpp\"",
       "setup": "make -s clean; make -s >/dev/null 2>&1; cat ./test-files/test_single_pipe.txt ./test-files/test_exit.txt > ./test-files/cmd.txt",
-      "run": "export USER=user; RES=$(. ./test-files/test_single_pipe.txt); NOTRES=$(ls -l | grep \"Tokenizer.cpp\"); echo "res=" $RES; echo "notres=" $NOTRES; strace -e trace=execve -f -o out.trace ./shell < ./test-files/cmd.txt >temp 2>/dev/null; echo A && grep 'execve(\"/bin/ls\"' out.trace; echo B && grep 'execve(\"/bin/grep\"' out.trace; echo C && grep -Fw -- \"${RES}\" temp; echo D && ! grep -Fw -- \"${NOTRES}\" temp; grep -q 'execve(\"/bin/ls\"' out.trace && grep -q 'execve(\"/bin/grep\"' out.trace && grep -qFw -- \"${RES}\" temp && ! grep -qFw -- \"${NOTRES}\" temp",
+      "run": "export USER=user; RES=$(. ./test-files/test_single_pipe.txt); NOTRES=$(ls -l | grep \"Tokenizer.cpp\"); echo res= $RES; echo notres= $NOTRES; strace -e trace=execve -f -o out.trace ./shell < ./test-files/cmd.txt >temp 2>/dev/null; echo A && grep 'execve(\"/bin/ls\"' out.trace; echo B && grep 'execve(\"/bin/grep\"' out.trace; echo C && grep -Fw -- \"${RES}\" temp; echo D && ! grep -Fw -- \"${NOTRES}\" temp; grep -q 'execve(\"/bin/ls\"' out.trace && grep -q 'execve(\"/bin/grep\"' out.trace && grep -qFw -- \"${RES}\" temp && ! grep -qFw -- \"${NOTRES}\" temp",
       "input": "",
       "output": "",
       "comparison": "included",
