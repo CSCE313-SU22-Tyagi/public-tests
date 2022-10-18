@@ -23,7 +23,7 @@
     {
       "name": "ls",
       "setup": "make -s clean; make -s >/dev/null 2>&1; cat ./test-files/test_ls.txt ./test-files/test_exit.txt > ./test-files/cmd.txt",
-      "run": "export USER=user; RES=$(. ./test-files/test_ls.txt); ./shell < ./test-files/cmd.txt 2>/dev/null | grep -qF -- \"${RES}\"",
+      "run": "export USER=user; RES=$(. ./test-files/test_ls.txt); cat $RES; ./shell < ./test-files/cmd.txt | grep -F -- \"${RES}\"",
       "input": "",
       "output": "",
       "comparison": "included",
