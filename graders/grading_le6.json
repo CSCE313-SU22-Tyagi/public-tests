@@ -2,7 +2,7 @@
     "tests": [
       {
         "name": "Compilation",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "setup": "make -s clean; make -s",
         "run": "ls -al | grep -E \"data_entry(\\s|$)\"",
         "input": "",
         "output": "data_entry",
